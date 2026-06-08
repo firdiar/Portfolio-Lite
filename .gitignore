@@ -1,0 +1,23 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
