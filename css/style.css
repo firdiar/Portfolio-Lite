@@ -155,7 +155,7 @@ body {
   position: relative;
   overflow: hidden;
   padding-top: 68px;
-  background: url('../background_wallpaper.jpg') center / cover no-repeat;
+  background: url('../assets/background_wallpaper.jpg') center / cover no-repeat;
 }
 
 .hero__bg {
@@ -369,7 +369,7 @@ body {
 
 /* About */
 .about {
-  background: linear-gradient(to right, rgba(240, 245, 255, 0.95) 0%, rgba(240, 245, 255, 0.95) 50%, rgba(240, 245, 255, 0.65) 100%), url('../MainChar.png') right center / contain no-repeat;
+  background: linear-gradient(to right, rgba(240, 245, 255, 0.95) 0%, rgba(240, 245, 255, 0.95) 50%, rgba(240, 245, 255, 0.65) 100%), url('../assets/MainChar.png') right center / contain no-repeat;
 }
 
 .about__grid {
@@ -569,7 +569,7 @@ body {
 
 /* Education */
 .education {
-  background: linear-gradient(rgba(240, 245, 255, 0.82), rgba(240, 245, 255, 0.82)), url('../Study.webp') center / cover no-repeat;
+  background: linear-gradient(rgba(240, 245, 255, 0.82), rgba(240, 245, 255, 0.82)), url('../assets/Study.webp') center / cover no-repeat;
 }
 
 .education__list {
@@ -739,7 +739,7 @@ body {
 
 /* Recommendations */
 .recommendations {
-  background: linear-gradient(rgba(240, 245, 255, 0.82), rgba(240, 245, 255, 0.82)), url('../Friends.jpg') center / cover no-repeat;
+  background: linear-gradient(rgba(240, 245, 255, 0.82), rgba(240, 245, 255, 0.82)), url('../assets/Friends.jpg') center / cover no-repeat;
 }
 
 .recommendations__carousel {
@@ -1417,13 +1417,6 @@ body {
   overflow: hidden;
 }
 
-.contact__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  max-width: 960px;
-  margin: 0 auto;
-}
 
 .contact__heading {
   font-family: var(--font-heading);
@@ -1646,10 +1639,6 @@ body {
   }
 
   .skills__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .contact__grid {
     grid-template-columns: 1fr;
   }
 
