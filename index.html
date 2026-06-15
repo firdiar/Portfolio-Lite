@@ -48,6 +48,10 @@
     </div>
   </section>
 
+  <a href="#about" class="hero__scroll-hint" aria-label="Scroll to About">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+  </a>
+
   <section class="section about" id="about">
     <div class="container">
       <h2 class="section__title">About Me</h2>
@@ -692,10 +696,22 @@
   </section>
 
   <section class="section contact" id="contact">
-    <div class="container">
-      <h2 class="section__title">Get In Touch</h2>
-      <p class="section__subtitle">Have a question or want to work together?</p>
-      <div class="contact__grid">
+    <div class="arona-gate" id="aronaGate">
+      <!-- Adjust --touch-x and --touch-y to position the touch zone on Arona's finger -->
+      <div class="arona-gate__image-wrap" style="--touch-x: 41.6%; --touch-y: 46%;">
+        <img src="Arona_Touch.jpg" alt="Touch Arona to connect" class="arona-gate__img">
+        <h2 class="section__title contact__title">Let's get in touch</h2>
+        <button class="arona-gate__touch" id="aronaTouch" aria-label="Touch to connect">
+          <span class="arona-gate__ring"></span>
+          <span class="arona-gate__ring arona-gate__ring--2"></span>
+          <span class="arona-gate__dot"></span>
+        </button>
+        <p class="arona-gate__prompt">Touch here to connect</p>
+        <div class="arona-gate__overlay" id="aronaOverlay"></div>
+        <div class="arona-gate__flash" id="aronaFlash"></div>
+      </div>
+    </div>
+    <div class="contact__panel contact--hidden" id="contactGrid">
         <div class="contact__info">
           <h3 class="contact__heading">Let's talk</h3>
           <p class="contact__text">I'm always open to discussing game development projects, creative ideas, or opportunities to bring your vision to life.</p>
@@ -733,7 +749,6 @@
           </div>
           <button type="submit" class="btn btn--primary btn--full">Send Message</button>
         </form>
-      </div>
     </div>
   </section>
 
@@ -760,6 +775,22 @@
       </div>
     </div>
   </div>
+  <div class="now-playing paused" id="nowPlaying">
+    <div class="now-playing__bars">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="now-playing__info">
+      <span class="now-playing__label">Now Playing</span>
+      <span class="now-playing__title">Constant Moderato</span>
+    </div>
+    <button class="now-playing__toggle" id="npToggle" aria-label="Toggle music">
+      <svg class="now-playing__icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>
+      <svg class="now-playing__icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <button class="now-playing__close" id="npClose" aria-label="Disable music">&times;</button>
+  </div>
+  <audio id="bgAudio" src="Constant Moderato.mp3" loop preload="auto"></audio>
+
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="js/main.js"></script>
 </body>

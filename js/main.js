@@ -28,7 +28,7 @@ const animateSkills = () => {
 };
 
 // Fade-in elements on scroll
-const fadeElements = document.querySelectorAll('.project-card, .ach-card, .edu-card, .project-mini, .about__avatar, .timeline__item, .rec-card');
+const fadeElements = document.querySelectorAll('.project-card, .ach-card, .edu-card, .project-mini, .about__avatar, .timeline__item, .rec-card, .contact__title');
 
 const fadeInOnScroll = () => {
   fadeElements.forEach(el => {
@@ -105,15 +105,51 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
 });
 
+// Active nav highlight
+const navLinks = document.querySelectorAll('.header__nav a[href^="#"]');
+const sections = [];
+navLinks.forEach(function(link) {
+  var sec = document.querySelector(link.getAttribute('href'));
+  if (sec) sections.push({ el: sec, link: link });
+});
+
+const updateActiveNav = () => {
+  var current = null;
+  var offset = window.innerHeight * 0.35;
+  sections.forEach(function(s) {
+    var rect = s.el.getBoundingClientRect();
+    if (rect.top <= offset && rect.bottom > 0) current = s;
+  });
+  navLinks.forEach(function(l) { l.classList.remove('active'); });
+  if (current) current.link.classList.add('active');
+};
+
+// Hide scroll hint when leaving hero
+const scrollHint = document.querySelector('.hero__scroll-hint');
+const heroSection = document.getElementById('hero');
+
+const toggleScrollHint = () => {
+  if (!scrollHint || !heroSection) return;
+  const heroBottom = heroSection.getBoundingClientRect().bottom;
+  if (heroBottom < window.innerHeight * 0.5) {
+    scrollHint.classList.add('hide');
+  } else {
+    scrollHint.classList.remove('hide');
+  }
+};
+
 // Event listeners
 window.addEventListener('scroll', () => {
   animateSkills();
   fadeInOnScroll();
+  toggleScrollHint();
+  updateActiveNav();
 });
 
 window.addEventListener('load', () => {
   animateSkills();
   fadeInOnScroll();
+  updateActiveNav();
 });
 
 // Swiper projects carousel
@@ -200,4 +236,97 @@ window.addEventListener('load', () => {
 
   window.addEventListener('scroll', checkVisibility, { passive: true });
   checkVisibility();
+})();
+
+// Arona Touch Gate
+(function() {
+  var aronaTouch = document.getElementById('aronaTouch');
+  var aronaGate = document.getElementById('aronaGate');
+  var aronaFlash = document.getElementById('aronaFlash');
+  var contactGrid = document.getElementById('contactGrid');
+
+  if (!aronaTouch || !aronaGate || !contactGrid) return;
+
+  var aronaOverlay = document.getElementById('aronaOverlay');
+
+  aronaTouch.addEventListener('click', function() {
+    if (aronaFlash) aronaFlash.classList.add('active');
+    setTimeout(function() {
+      aronaGate.classList.add('touched');
+      if (aronaOverlay) aronaOverlay.classList.add('active');
+    }, 300);
+    setTimeout(function() {
+      contactGrid.classList.remove('contact--hidden');
+      contactGrid.classList.add('contact--reveal');
+    }, 700);
+  });
+})();
+
+// Background Music
+(function() {
+  var audio = document.getElementById('bgAudio');
+  var widget = document.getElementById('nowPlaying');
+  var toggleBtn = document.getElementById('npToggle');
+  var closeBtn = document.getElementById('npClose');
+
+  if (!audio || !widget) return;
+
+  if (localStorage.getItem('musicDisabled') === 'true') {
+    widget.classList.add('hidden');
+    return;
+  }
+
+  audio.volume = 0.4;
+  var started = false;
+
+  var setPlaying = function() { widget.classList.remove('paused'); };
+  var setPaused = function() { widget.classList.add('paused'); };
+
+  var removeListeners = function() {
+    document.removeEventListener('click', onFirstInteract, true);
+    document.removeEventListener('keydown', onFirstInteract, true);
+    document.removeEventListener('touchstart', onFirstInteract, true);
+  };
+
+  var onFirstInteract = function() {
+    if (started) return;
+    started = true;
+    removeListeners();
+    audio.play().then(setPlaying).catch(function() { setPaused(); });
+  };
+
+  var autoplayResult = audio.play();
+  if (autoplayResult !== undefined) {
+    autoplayResult.then(function() {
+      started = true;
+      setPlaying();
+      removeListeners();
+    }).catch(function() {
+      setPaused();
+      document.addEventListener('click', onFirstInteract, true);
+      document.addEventListener('keydown', onFirstInteract, true);
+      document.addEventListener('touchstart', onFirstInteract, true);
+    });
+  }
+
+  toggleBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    started = true;
+    removeListeners();
+    if (audio.paused) {
+      audio.play().then(setPlaying).catch(function() {});
+    } else {
+      audio.pause();
+      setPaused();
+    }
+  });
+
+  closeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    started = true;
+    audio.pause();
+    widget.classList.add('hidden');
+    localStorage.setItem('musicDisabled', 'true');
+    removeListeners();
+  });
 })();
