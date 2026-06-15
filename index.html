@@ -697,8 +697,8 @@
 
   <section class="section contact" id="contact">
     <div class="arona-gate" id="aronaGate">
-      <!-- Adjust --touch-x and --touch-y to position the touch zone on Arona's finger -->
-      <div class="arona-gate__image-wrap" style="--touch-x: 41.6%; --touch-y: 46%;">
+      <!-- Adjust data-img-x / data-img-y = touch position as % of the ORIGINAL image -->
+      <div class="arona-gate__image-wrap" data-img-x="41.6" data-img-y="46" data-bubble-x="60" data-bubble-y="5">
         <img src="Arona_Touch.jpg" alt="Touch Arona to connect" class="arona-gate__img">
         <h2 class="section__title contact__title">Let's get in touch</h2>
         <button class="arona-gate__touch" id="aronaTouch" aria-label="Touch to connect">

@@ -238,6 +238,54 @@ window.addEventListener('load', () => {
   checkVisibility();
 })();
 
+// Arona Touch Position (object-fit: cover compensation)
+(function() {
+  var wrap = document.querySelector('.arona-gate__image-wrap');
+  if (!wrap) return;
+  var img = wrap.querySelector('.arona-gate__img');
+  if (!img) return;
+
+  function mapToContainer(pctX, pctY, cw, ch, nw, nh) {
+    var scale = Math.max(cw / nw, ch / nh);
+    var dw = nw * scale;
+    var dh = nh * scale;
+    var ox = (dw - cw) / 2;
+    var oy = (dh - ch) / 2;
+    return {
+      x: ((pctX * dw - ox) / cw * 100),
+      y: ((pctY * dh - oy) / ch * 100)
+    };
+  }
+
+  function update() {
+    if (!img.naturalWidth) return;
+    var cw = wrap.clientWidth;
+    var ch = wrap.clientHeight;
+    var nw = img.naturalWidth;
+    var nh = img.naturalHeight;
+
+    var ix = parseFloat(wrap.dataset.imgX) / 100;
+    var iy = parseFloat(wrap.dataset.imgY) / 100;
+    if (!isNaN(ix) && !isNaN(iy)) {
+      var t = mapToContainer(ix, iy, cw, ch, nw, nh);
+      wrap.style.setProperty('--touch-x', t.x + '%');
+      wrap.style.setProperty('--touch-y', t.y + '%');
+    }
+
+    var bx = parseFloat(wrap.dataset.bubbleX) / 100;
+    var by = parseFloat(wrap.dataset.bubbleY) / 100;
+    if (!isNaN(bx) && !isNaN(by)) {
+      var b = mapToContainer(bx, by, cw, ch, nw, nh);
+      wrap.style.setProperty('--bubble-x', b.x + '%');
+      wrap.style.setProperty('--bubble-y', b.y + '%');
+    }
+  }
+
+  img.addEventListener('load', update);
+  window.addEventListener('resize', update);
+  if (img.complete) update();
+})();
+
 // Arona Touch Gate
 (function() {
   var aronaTouch = document.getElementById('aronaTouch');

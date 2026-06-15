@@ -1378,8 +1378,8 @@ body {
 /* Contact */
 .contact__title {
   position: absolute;
-  top: 48px;       /* Adjust vertical position of the bubble */
-  right: 15%;      /* Adjust horizontal position of the bubble */
+  top: var(--bubble-y, 5%);
+  left: var(--bubble-x, 85%);
   z-index: 4;
   background: var(--bg-card);
   border: 2px solid var(--primary-light);
