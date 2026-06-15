@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Firdiansyah Ramadhan</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232B6FBA'/><text x='16' y='22' text-anchor='middle' font-family='Arial,sans-serif' font-weight='bold' font-size='18' fill='white'>FR</text></svg>">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -256,87 +257,95 @@
     <div class="container">
       <h2 class="section__title">Projects</h2>
       <p class="section__subtitle">Things I've built</p>
-      <div class="projects__carousel">
-        <div class="projects__grid">
-          <div class="project-card">
-            <div class="project-card__image" style="background-image: url('assets/Persona.png'); background-size: cover; background-position: center;">
-              <a href="https://firdiar.github.io/Persona-Portfolio/" target="_blank" class="project-card__image-link">
-              </a>
-            </div>
-            <div class="project-card__body">
-              <h3 class="project-card__title">Project Persona</h3>
-              <p class="project-card__desc">Interactive 3D portfolio website built in Unity — a unique first-person experience to explore projects and skills.</p>
-              <div class="project-card__tags">
-                <span>Unity</span>
-                <span>C#</span>
-                <span>Portfolio</span>
-                <span>3D</span>
+      <div class="projects__carousel swiper" id="projectsSwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="project-card" data-index="0">
+              <div class="project-card__image" style="background-image: url('assets/Persona.png'); background-size: cover; background-position: center;">
+                <a href="https://firdiar.github.io/Persona-Portfolio/" target="_blank" class="project-card__image-link">
+                </a>
               </div>
-              <div class="project-card__links">
-                <a href="https://firdiar.github.io/Persona-Portfolio/" target="_blank" class="project-card__link">View Project</a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-card__image" style="background-image: url('https://img.youtube.com/vi/4Fj5zorj55k/maxresdefault.jpg'); background-size: cover; background-position: center;">
-              <a href="#" data-video-id="4Fj5zorj55k" class="project-card__image-link project-card__video-trigger">
-                <div class="project-card__play-btn">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <div class="project-card__body">
+                <h3 class="project-card__title">Project Persona</h3>
+                <p class="project-card__desc">Interactive 3D portfolio website built in Unity — a unique first-person experience to explore projects and skills.</p>
+                <div class="project-card__tags">
+                  <span>Unity</span>
+                  <span>C#</span>
+                  <span>Portfolio</span>
+                  <span>3D</span>
                 </div>
-              </a>
-            </div>
-            <div class="project-card__body">
-              <h3 class="project-card__title">Code Atma</h3>
-              <p class="project-card__desc">Mobile game developed at Agate International. Published on iOS and Android with optimized performance and engaging gameplay systems.</p>
-              <div class="project-card__tags">
-                <span>Unity</span>
-                <span>Mobile</span>
-                <span>iOS</span>
-                <span>Android</span>
-              </div>
-              <div class="project-card__links">
-                <a href="https://apkpure.com/id/code-atma-supernatural-rpg/com.agate.bpm" target="_blank" class="project-card__link">View on APKPure</a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-card__image" style="background-image: url('https://img.youtube.com/vi/JhiQrsFNqMI/maxresdefault.jpg'); background-size: cover; background-position: center;">
-              <a href="#" data-video-id="JhiQrsFNqMI" class="project-card__image-link project-card__video-trigger">
-                <div class="project-card__play-btn">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <div class="project-card__links">
+                  <a href="https://firdiar.github.io/Persona-Portfolio/" target="_blank" class="project-card__link">View Project</a>
                 </div>
-              </a>
-            </div>
-            <div class="project-card__body">
-              <h3 class="project-card__title">Rocky Rampage</h3>
-              <p class="project-card__desc">Mobile action game developed at Joyseed Gametribe (iCandy subsidiary). Shipped with polished gameplay, VFX, and shader programming.</p>
-              <div class="project-card__tags">
-                <span>Unity</span>
-                <span>Mobile</span>
-                <span>Gameplay</span>
-                <span>VFX</span>
-              </div>
-              <div class="project-card__links">
-                <a href="https://apkpure.com/id/rocky-rampage-wreck-em-up/com.joyseed.bod" target="_blank" class="project-card__link">View on APKPure</a>
               </div>
             </div>
           </div>
-          <div class="project-card">
-            <div class="project-card__image" style="background-image: url('assets/OutlandOdisseyThumnail.png'); background-size: cover; background-position: center;">
-              <a href="https://apkpure.com/id/outland-odyssey-action-rpg/com.PTBenihPermainanInternasional.OutlandOdyssey" target="_blank" class="project-card__image-link">
-              </a>
-            </div>
-            <div class="project-card__body">
-              <h3 class="project-card__title">Outland Odyssey</h3>
-              <p class="project-card__desc">Action RPG with core gameplay mechanics, AI systems, and networking. Published on Google Play with multiplayer and immersive combat.</p>
-              <div class="project-card__tags">
-                <span>Unity</span>
-                <span>C#</span>
-                <span>Action RPG</span>
-                <span>Multiplayer</span>
+          <div class="swiper-slide">
+            <div class="project-card" data-index="1">
+              <div class="project-card__image" style="background-image: url('https://img.youtube.com/vi/4Fj5zorj55k/maxresdefault.jpg'); background-size: cover; background-position: center;">
+                <a href="#" data-video-id="4Fj5zorj55k" class="project-card__image-link project-card__video-trigger">
+                  <div class="project-card__play-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </a>
               </div>
-              <div class="project-card__links">
-                <a href="https://apkpure.com/id/outland-odyssey-action-rpg/com.PTBenihPermainanInternasional.OutlandOdyssey" target="_blank" class="project-card__link">View on APKPure</a>
+              <div class="project-card__body">
+                <h3 class="project-card__title">Code Atma</h3>
+                <p class="project-card__desc">Mobile game developed at Agate International. Published on iOS and Android with optimized performance and engaging gameplay systems.</p>
+                <div class="project-card__tags">
+                  <span>Unity</span>
+                  <span>Mobile</span>
+                  <span>iOS</span>
+                  <span>Android</span>
+                </div>
+                <div class="project-card__links">
+                  <a href="https://apkpure.com/id/code-atma-supernatural-rpg/com.agate.bpm" target="_blank" class="project-card__link">View on APKPure</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="project-card" data-index="2">
+              <div class="project-card__image" style="background-image: url('https://img.youtube.com/vi/JhiQrsFNqMI/maxresdefault.jpg'); background-size: cover; background-position: center;">
+                <a href="#" data-video-id="JhiQrsFNqMI" class="project-card__image-link project-card__video-trigger">
+                  <div class="project-card__play-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </a>
+              </div>
+              <div class="project-card__body">
+                <h3 class="project-card__title">Rocky Rampage</h3>
+                <p class="project-card__desc">Mobile action game developed at Joyseed Gametribe (iCandy subsidiary). Shipped with polished gameplay, VFX, and shader programming.</p>
+                <div class="project-card__tags">
+                  <span>Unity</span>
+                  <span>Mobile</span>
+                  <span>Gameplay</span>
+                  <span>VFX</span>
+                </div>
+                <div class="project-card__links">
+                  <a href="https://apkpure.com/id/rocky-rampage-wreck-em-up/com.joyseed.bod" target="_blank" class="project-card__link">View on APKPure</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="project-card" data-index="3">
+              <div class="project-card__image" style="background-image: url('assets/OutlandOdisseyThumnail.png'); background-size: cover; background-position: center;">
+                <a href="https://apkpure.com/id/outland-odyssey-action-rpg/com.PTBenihPermainanInternasional.OutlandOdyssey" target="_blank" class="project-card__image-link">
+                </a>
+              </div>
+              <div class="project-card__body">
+                <h3 class="project-card__title">Outland Odyssey</h3>
+                <p class="project-card__desc">Action RPG with core gameplay mechanics, AI systems, and networking. Published on Google Play with multiplayer and immersive combat.</p>
+                <div class="project-card__tags">
+                  <span>Unity</span>
+                  <span>C#</span>
+                  <span>Action RPG</span>
+                  <span>Multiplayer</span>
+                </div>
+                <div class="project-card__links">
+                  <a href="https://apkpure.com/id/outland-odyssey-action-rpg/com.PTBenihPermainanInternasional.OutlandOdyssey" target="_blank" class="project-card__link">View on APKPure</a>
+                </div>
               </div>
             </div>
           </div>
@@ -349,7 +358,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
         </button>
 
-        <div class="carousel__dots"></div>
+        <div class="swiper-pagination"></div>
       </div>
 
       <h3 class="projects__compact-heading">More Projects</h3>
@@ -493,6 +502,7 @@
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -116,127 +116,50 @@ window.addEventListener('load', () => {
   fadeInOnScroll();
 });
 
-// Carousel
+// Swiper projects carousel
 (function() {
-  const grid = document.querySelector('.projects__grid');
-  if (!grid) return;
+  const swiperEl = document.getElementById('projectsSwiper');
+  if (!swiperEl) return;
 
-  const realCards = [...grid.children];
-  const realCount = realCards.length;
-  if (realCount < 2) return;
-
-  const carousel = document.querySelector('.projects__carousel');
-  const prevBtn = carousel.querySelector('.carousel__btn--prev');
-  const nextBtn = carousel.querySelector('.carousel__btn--next');
-  const dotsContainer = carousel.querySelector('.carousel__dots');
-
-  // Clone for infinite loop
-  grid.appendChild(realCards[0].cloneNode(true));
-  grid.insertBefore(realCards[realCount - 1].cloneNode(true), realCards[0]);
-
-  const allCards = [...grid.children];
-  let currentReal = 0;
-  let isAnimating = false;
-  let progScroll = false;
-  let autoTimer, interactionTimer;
-
-  // Create dots
-  for (let i = 0; i < realCount; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'carousel__dot' + (i === 0 ? ' active' : '');
-    dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-    dot.addEventListener('click', () => goTo(i));
-    dotsContainer.appendChild(dot);
-  }
-  const dots = [...dotsContainer.children];
-
-  const updateDots = (i) => dots.forEach((d, j) => d.classList.toggle('active', j === i));
-
-  const targetLeft = (i) => allCards[i + 1].offsetLeft;
-
-  const scrollToCard = (allIdx) => {
-    if (isAnimating || window.innerWidth <= 900) return;
-    isAnimating = true;
-    pauseAuto();
-
-    progScroll = true;
-    grid.scrollTo({ left: allCards[allIdx].offsetLeft, behavior: 'smooth' });
-
-    setTimeout(() => {
-      // Find closest card after scroll settles
-      let nearest = 0;
-      let minDist = Infinity;
-      allCards.forEach((c, i) => {
-        const d = Math.abs(c.offsetLeft - grid.scrollLeft);
-        if (d < minDist) { minDist = d; nearest = i; }
-      });
-
-      isAnimating = false;
-
-      if (nearest === 0) {
-        // Landed on start clone — jump to last real card
-        progScroll = true;
-        grid.scrollLeft = allCards[realCount].offsetLeft;
-        currentReal = realCount - 1;
-        setTimeout(() => { progScroll = false; }, 50);
-      } else if (nearest === realCount + 1) {
-        // Landed on end clone — jump to first real card
-        progScroll = true;
-        grid.scrollLeft = allCards[1].offsetLeft;
-        currentReal = 0;
-        setTimeout(() => { progScroll = false; }, 50);
-      } else {
-        currentReal = nearest - 1;
-        progScroll = false;
+  const swiper = new Swiper(swiperEl, {
+    loop: true,
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    spaceBetween: 28,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: true,
+    },
+    navigation: {
+      nextEl: '.carousel__btn--next',
+      prevEl: '.carousel__btn--prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    on: {
+      init: function() {
+        this.el.addEventListener('click', (e) => {
+          const link = e.target.closest('.project-card__video-trigger');
+          if (!link) return;
+          e.preventDefault();
+          openModal(link.dataset.videoId);
+        });
       }
-
-      updateDots(currentReal);
-    }, 500);
-  };
-
-  const nextSlide = () => scrollToCard(Math.min(currentReal + 2, realCount + 1));
-  const prevSlide = () => scrollToCard(Math.max(currentReal, 0));
-  const goTo = (realIdx) => scrollToCard(realIdx + 1);
-
-  const startAuto = () => {
-    stopAuto();
-    autoTimer = setInterval(() => {
-      if (window.innerWidth <= 900) return;
-      const r = grid.getBoundingClientRect();
-      if (r.top >= window.innerHeight || r.bottom <= 0) return;
-      nextSlide();
-    }, 5000);
-  };
-
-  const stopAuto = () => { clearInterval(autoTimer); clearTimeout(interactionTimer); };
-  const pauseAuto = () => { stopAuto(); interactionTimer = setTimeout(startAuto, 5000); };
-
-  // Init
-  grid.scrollLeft = targetLeft(0);
-
-  // Fix video triggers for cloned cards via delegation
-  grid.addEventListener('click', (e) => {
-    const link = e.target.closest('.project-card__video-trigger');
-    if (!link) return;
-    e.preventDefault();
-    openModal(link.dataset.videoId);
+    }
   });
 
-  prevBtn.addEventListener('click', prevSlide);
-  nextBtn.addEventListener('click', nextSlide);
+  swiperEl.addEventListener('mouseenter', () => swiper.autoplay.stop());
+  swiperEl.addEventListener('mouseleave', () => swiper.autoplay.start());
 
-  grid.addEventListener('mouseenter', stopAuto);
-  grid.addEventListener('mouseleave', startAuto);
+  const checkVisibility = () => {
+    const r = swiperEl.getBoundingClientRect();
+    const visible = r.top < window.innerHeight && r.bottom > 0;
+    if (visible && !swiper.autoplay.running) swiper.autoplay.start();
+    if (!visible && swiper.autoplay.running) swiper.autoplay.stop();
+  };
 
-  grid.addEventListener('scroll', () => {
-    if (progScroll || isAnimating) return;
-    pauseAuto();
-  }, { passive: true });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft' && !document.querySelector('.modal.active')) prevSlide();
-    if (e.key === 'ArrowRight' && !document.querySelector('.modal.active')) nextSlide();
-  });
-
-  startAuto();
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  checkVisibility();
 })();
