@@ -41,36 +41,56 @@ const fadeInOnScroll = () => {
 
 // Contact form handler
 const form = document.getElementById('contactForm');
+const submitBtn = form.querySelector('button[type="submit"]');
+const formStatus = document.getElementById('formStatus');
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
+function openMailtoFallback() {
   const name = document.getElementById('name').value.trim();
   const email = document.getElementById('email').value.trim();
-  const subject = document.getElementById('subject').value.trim();
   const message = document.getElementById('message').value.trim();
-
-  if (!name || !email || !message) {
-    alert('Please fill in all required fields.');
-    return;
-  }
-
   const recipient = 'firdi.ansyah20@gmail.com';
-  const emailSubject = subject || 'Portfolio Inquiry';
+  const subject = 'Portfolio Inquiry';
   const body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message + '\n\n---\nSent from my portfolio website';
+  const mailtoUrl = 'mailto:' + encodeURIComponent(recipient)
+    + '?subject=' + encodeURIComponent(subject)
+    + '&body=' + encodeURIComponent(body);
+  window.open(mailtoUrl, '_blank');
+}
 
-  if (email.endsWith('@gmail.com')) {
-    const gmailUrl = 'https://mail.google.com/mail/?view=cm&to=' + encodeURIComponent(recipient)
-      + '&su=' + encodeURIComponent(emailSubject)
-      + '&body=' + encodeURIComponent(body);
-    window.open(gmailUrl, '_blank');
-  } else {
-    const mailtoUrl = 'mailto:' + encodeURIComponent(recipient)
-      + '?subject=' + encodeURIComponent(emailSubject)
-      + '&body=' + encodeURIComponent(body);
-    window.open(mailtoUrl, '_blank');
+function showStatus(msg, type) {
+  formStatus.textContent = msg;
+  formStatus.className = 'form-status form-status--' + type;
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Sending...';
+  submitBtn.disabled = true;
+  formStatus.className = 'form-status';
+  formStatus.textContent = '';
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: new FormData(form)
+    });
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      showStatus('Message sent successfully!', 'success');
+      form.reset();
+    } else {
+      openMailtoFallback();
+      showStatus('Opened your email client as fallback.', 'error');
+    }
+  } catch (error) {
+    openMailtoFallback();
+    showStatus('Opened your email client as fallback.', 'error');
+  } finally {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
   }
-
-  form.reset();
 });
 
 // Video modal
