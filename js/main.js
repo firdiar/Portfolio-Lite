@@ -28,7 +28,7 @@ const animateSkills = () => {
 };
 
 // Fade-in elements on scroll
-const fadeElements = document.querySelectorAll('.project-card, .ach-card, .edu-card, .project-mini, .about__avatar, .timeline__item');
+const fadeElements = document.querySelectorAll('.project-card, .ach-card, .edu-card, .project-mini, .about__avatar, .timeline__item, .rec-card');
 
 const fadeInOnScroll = () => {
   fadeElements.forEach(el => {
@@ -148,6 +148,44 @@ window.addEventListener('load', () => {
         });
       }
     }
+  });
+
+  swiperEl.addEventListener('mouseenter', () => swiper.autoplay.stop());
+  swiperEl.addEventListener('mouseleave', () => swiper.autoplay.start());
+
+  const checkVisibility = () => {
+    const r = swiperEl.getBoundingClientRect();
+    const visible = r.top < window.innerHeight && r.bottom > 0;
+    if (visible && !swiper.autoplay.running) swiper.autoplay.start();
+    if (!visible && swiper.autoplay.running) swiper.autoplay.stop();
+  };
+
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  checkVisibility();
+})();
+
+// Recommendations Swiper
+(function() {
+  const swiperEl = document.getElementById('recommendationsSwiper');
+  if (!swiperEl) return;
+
+  const swiper = new Swiper(swiperEl, {
+    loop: true,
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    spaceBetween: 24,
+    autoplay: {
+      delay: 6000,
+      disableOnInteraction: true,
+    },
+    navigation: {
+      nextEl: '.carousel__btn--next',
+      prevEl: '.carousel__btn--prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
   });
 
   swiperEl.addEventListener('mouseenter', () => swiper.autoplay.stop());
