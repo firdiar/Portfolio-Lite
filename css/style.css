@@ -813,6 +813,10 @@ body {
   }
 }
 
+.projects {
+  background: var(--bg-card);
+}
+
 /* Projects */
 .projects__carousel {
   position: relative;
