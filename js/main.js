@@ -268,13 +268,9 @@ window.addEventListener('load', () => {
   var widget = document.getElementById('nowPlaying');
   var toggleBtn = document.getElementById('npToggle');
   var closeBtn = document.getElementById('npClose');
+  var enableBtn = document.getElementById('npEnable');
 
   if (!audio || !widget) return;
-
-  if (localStorage.getItem('musicDisabled') === 'true') {
-    widget.classList.add('hidden');
-    return;
-  }
 
   audio.volume = 0.4;
   var started = false;
@@ -295,18 +291,32 @@ window.addEventListener('load', () => {
     audio.play().then(setPlaying).catch(function() { setPaused(); });
   };
 
-  var autoplayResult = audio.play();
-  if (autoplayResult !== undefined) {
-    autoplayResult.then(function() {
-      started = true;
-      setPlaying();
-      removeListeners();
-    }).catch(function() {
-      setPaused();
-      document.addEventListener('click', onFirstInteract, true);
-      document.addEventListener('keydown', onFirstInteract, true);
-      document.addEventListener('touchstart', onFirstInteract, true);
-    });
+  var showEnableBtn = function() {
+    if (enableBtn) enableBtn.classList.remove('hidden');
+  };
+
+  var hideEnableBtn = function() {
+    if (enableBtn) enableBtn.classList.add('hidden');
+  };
+
+  if (localStorage.getItem('musicDisabled') === 'true') {
+    widget.classList.add('hidden');
+    showEnableBtn();
+  } else {
+    hideEnableBtn();
+    var autoplayResult = audio.play();
+    if (autoplayResult !== undefined) {
+      autoplayResult.then(function() {
+        started = true;
+        setPlaying();
+        removeListeners();
+      }).catch(function() {
+        setPaused();
+        document.addEventListener('click', onFirstInteract, true);
+        document.addEventListener('keydown', onFirstInteract, true);
+        document.addEventListener('touchstart', onFirstInteract, true);
+      });
+    }
   }
 
   toggleBtn.addEventListener('click', function(e) {
@@ -326,7 +336,19 @@ window.addEventListener('load', () => {
     started = true;
     audio.pause();
     widget.classList.add('hidden');
+    showEnableBtn();
     localStorage.setItem('musicDisabled', 'true');
     removeListeners();
   });
+
+  if (enableBtn) {
+    enableBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      localStorage.removeItem('musicDisabled');
+      hideEnableBtn();
+      widget.classList.remove('hidden');
+      started = true;
+      audio.play().then(setPlaying).catch(function() { setPaused(); });
+    });
+  }
 })();

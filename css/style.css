@@ -1952,9 +1952,44 @@ body {
 .now-playing.paused .now-playing__icon-play { display: block; }
 .now-playing.paused .now-playing__icon-pause { display: none; }
 
+.now-playing__enable {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1500;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(27, 42, 74, 0.75);
+  backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(76, 143, 236, 0.2);
+  transition: opacity 0.4s ease, transform 0.4s ease, color 0.2s;
+}
+
+.now-playing__enable:hover {
+  color: #fff;
+}
+
+.now-playing__enable.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+
+.now-playing__enable svg {
+  width: 20px;
+  height: 20px;
+}
+
 @media (max-width: 480px) {
   .now-playing {
-  bottom: 4px;
+    bottom: 4px;
     right: 16px;
     padding: 8px 12px;
     gap: 8px;
@@ -1966,5 +2001,10 @@ body {
 
   .now-playing__title {
     font-size: 0.75rem;
+  }
+
+  .now-playing__enable {
+    bottom: 16px;
+    right: 16px;
   }
 }
