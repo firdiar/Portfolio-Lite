@@ -576,53 +576,90 @@ body {
   background: var(--bg-card);
 }
 
+.achievements__category {
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+  margin-top: 32px;
+  color: var(--text);
+}
+
+.achievements__category:first-of-type {
+  margin-top: 0;
+}
+
 .achievements__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
 }
 
 .ach-card {
-  padding: 32px 24px;
+  padding: 20px 16px;
   text-align: center;
-  background: var(--bg);
   border-radius: var(--radius);
   transition: transform var(--transition), box-shadow var(--transition);
 }
 
 .ach-card:hover {
-  transform: translateY(-4px);
+  transform: scale(1.02);
   box-shadow: var(--shadow-hover);
 }
 
-.ach-card__icon {
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 16px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-  border-radius: 14px;
+.ach-card--first {
+  background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+}
+
+.highlight {
+  background: rgba(43, 111, 186, 0.1);
+  color: var(--primary);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+.ach-card--second {
+  background: linear-gradient(135deg, #F8FAFC, #E2E8F0);
+}
+
+.ach-card--other {
+  background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+}
+
+.ach-card__badge {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-white);
-}
-
-.ach-card__icon svg {
-  width: 24px;
-  height: 24px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
 }
 
 .ach-card__title {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
   color: var(--text);
 }
 
+.ach-card__meta {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
 .ach-card__desc {
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   color: var(--text-light);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 /* Recommendations */
