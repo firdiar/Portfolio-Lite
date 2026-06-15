@@ -444,6 +444,35 @@ body {
   margin-top: 4px;
 }
 
+.about__social {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.about__social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(76, 143, 236, 0.10);
+  color: var(--primary);
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+}
+
+.about__social a:hover {
+  background: var(--primary);
+  color: var(--text-white);
+  transform: translateY(-2px);
+}
+
+.about__social svg {
+  width: 20px;
+  height: 20px;
+}
+
 /* Skills */
 .skills {
   background: var(--bg-card);
