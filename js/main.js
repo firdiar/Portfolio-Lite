@@ -108,6 +108,8 @@
     setTimeout(function() {
       if (transition) transition.classList.add('fade-out');
       document.body.classList.remove('intro-active');
+      var hero = document.querySelector('.hero');
+      if (hero) hero.classList.add('revealed');
     }, 4600);
 
     setTimeout(function() {
