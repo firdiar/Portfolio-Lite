@@ -89,4 +89,6 @@ Also visit [Persona Portfolio](https://firdiar.github.io/Persona-Portfolio/) —
 
 ## License
 
-All rights reserved.
+This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/).
+
+You are free to share and adapt this work for non-commercial purposes, provided you give appropriate credit to the original creator.
