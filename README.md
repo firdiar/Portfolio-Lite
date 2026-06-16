@@ -49,11 +49,11 @@ Also visit [Persona Portfolio](https://firdiar.github.io/Persona-Portfolio/) —
 
 ### Screenshots
 
-| Intro / Loading Screen | Hero Section |
+| Intro / Loading Screen | Welcome |
 |---|---|
 | ![Intro](readmeasset/Screenshot%202026-06-16%20111016.png) | ![Hero](readmeasset/Screenshot%202026-06-16%20111051.png) |
 
-| Recommendations | Contact (Arona Touch) |
+| Home | Contact (Arona Touch) |
 |---|---|
 | ![Recommendations](readmeasset/Screenshot%202026-06-16%20111107.png) | ![Contact](readmeasset/Screenshot%202026-06-16%20111232.png) |
 
