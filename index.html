@@ -8,7 +8,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="intro-active">
+  <div class="intro" id="intro">
+    <div class="intro__particles" id="introParticles"></div>
+    <h1 class="intro__title"><span class="intro__title--black">PORTFOLIO</span> <span class="intro__title--blue">ARCHIVE</span></h1>
+    <div class="intro__flash" id="introFlash"></div>
+    <div class="intro__sweep"></div>
+    <div class="intro__content">
+      <div class="intro__loader" id="introLoader">
+        <div class="intro__bar"><div class="intro__bar-fill" id="introBarFill"></div></div>
+        <p class="intro__percent" id="introPercent">0%</p>
+      </div>
+      <button class="intro__start intro--hidden" id="introStart">TOUCH TO START</button>
+      <p class="intro__copyright">&copy; 2026 Firdiansyah Ramadhan. All rights reserved.</p>
+    </div>
+  </div>
+
   <header class="header">
     <div class="container header__inner">
       <a href="#" class="header__logo">FR.</a>

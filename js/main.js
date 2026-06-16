@@ -1,3 +1,94 @@
+// Intro & Asset Preloader
+(function() {
+  var intro = document.getElementById('intro');
+  var loader = document.getElementById('introLoader');
+  var barFill = document.getElementById('introBarFill');
+  var percent = document.getElementById('introPercent');
+  var startBtn = document.getElementById('introStart');
+  var audio = document.getElementById('bgAudio');
+
+  if (!intro || !startBtn) return;
+
+  var particleContainer = document.getElementById('introParticles');
+  if (particleContainer) {
+    for (var i = 0; i < 25; i++) {
+      var p = document.createElement('span');
+      p.className = 'intro__particle';
+      var size = Math.random() * 4 + 2;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.bottom = -(Math.random() * 20) + '%';
+      p.style.animationDuration = (Math.random() * 12 + 8) + 's';
+      p.style.animationDelay = -(Math.random() * 20) + 's';
+      particleContainer.appendChild(p);
+    }
+  }
+
+  var assets = [
+    'assets/background_wallpaper.jpg',
+    'assets/BA_Button.png',
+    'assets/Profile2026.JPG',
+    'assets/Arona_Touch.jpg',
+    'assets/MainChar.png',
+    'assets/Friends.jpg'
+  ];
+
+  var loaded = 0;
+  var total = assets.length + 1;
+
+  function updateProgress() {
+    var pct = Math.round((loaded / total) * 100);
+    if (barFill) barFill.style.width = pct + '%';
+    if (percent) percent.textContent = pct + '%';
+  }
+
+  assets.forEach(function(src) {
+    var img = new Image();
+    img.onload = img.onerror = checkComplete;
+    img.src = src;
+  });
+
+  if (audio) {
+    var audioReady = false;
+    var onAudioReady = function() {
+      if (audioReady) return;
+      audioReady = true;
+      checkComplete();
+    };
+    audio.addEventListener('canplaythrough', onAudioReady, { once: true });
+    audio.load();
+    setTimeout(onAudioReady, 5000);
+  } else {
+    checkComplete();
+  }
+
+  var started = false;
+  var startHandler = function() {
+    if (started) return;
+    started = true;
+    if (audio && localStorage.getItem('musicDisabled') !== 'true') {
+      audio.volume = 0.4;
+      audio.play().catch(function() {});
+    }
+    intro.classList.add('exit');
+    document.body.classList.remove('intro-active');
+    setTimeout(function() {
+      intro.style.display = 'none';
+    }, 1200);
+  };
+
+  function checkComplete() {
+    loaded++;
+    updateProgress();
+    if (loaded >= total) {
+      if (loader) loader.classList.add('intro--hidden');
+      startBtn.classList.remove('intro--hidden');
+      intro.addEventListener('click', startHandler);
+    }
+  }
+})();
+
 // Mobile menu toggle
 const toggle = document.querySelector('.header__toggle');
 const nav = document.querySelector('.header__nav');
@@ -330,7 +421,7 @@ window.addEventListener('load', () => {
   });
 })();
 
-// Background Music
+// Background Music (toggle, close, re-enable — playback started by intro)
 (function() {
   var audio = document.getElementById('bgAudio');
   var widget = document.getElementById('nowPlaying');
@@ -340,57 +431,22 @@ window.addEventListener('load', () => {
 
   if (!audio || !widget) return;
 
-  audio.volume = 0.4;
-  var started = false;
-
   var setPlaying = function() { widget.classList.remove('paused'); };
   var setPaused = function() { widget.classList.add('paused'); };
-
-  var removeListeners = function() {
-    document.removeEventListener('click', onFirstInteract, true);
-    document.removeEventListener('keydown', onFirstInteract, true);
-    document.removeEventListener('touchstart', onFirstInteract, true);
-  };
-
-  var onFirstInteract = function() {
-    if (started) return;
-    started = true;
-    removeListeners();
-    audio.play().then(setPlaying).catch(function() { setPaused(); });
-  };
-
-  var showEnableBtn = function() {
-    if (enableBtn) enableBtn.classList.remove('hidden');
-  };
-
-  var hideEnableBtn = function() {
-    if (enableBtn) enableBtn.classList.add('hidden');
-  };
+  var showEnableBtn = function() { if (enableBtn) enableBtn.classList.remove('hidden'); };
+  var hideEnableBtn = function() { if (enableBtn) enableBtn.classList.add('hidden'); };
 
   if (localStorage.getItem('musicDisabled') === 'true') {
     widget.classList.add('hidden');
     showEnableBtn();
   } else {
     hideEnableBtn();
-    var autoplayResult = audio.play();
-    if (autoplayResult !== undefined) {
-      autoplayResult.then(function() {
-        started = true;
-        setPlaying();
-        removeListeners();
-      }).catch(function() {
-        setPaused();
-        document.addEventListener('click', onFirstInteract, true);
-        document.addEventListener('keydown', onFirstInteract, true);
-        document.addEventListener('touchstart', onFirstInteract, true);
-      });
-    }
+    audio.addEventListener('playing', setPlaying);
+    audio.addEventListener('pause', setPaused);
   }
 
   toggleBtn.addEventListener('click', function(e) {
     e.stopPropagation();
-    started = true;
-    removeListeners();
     if (audio.paused) {
       audio.play().then(setPlaying).catch(function() {});
     } else {
@@ -401,12 +457,10 @@ window.addEventListener('load', () => {
 
   closeBtn.addEventListener('click', function(e) {
     e.stopPropagation();
-    started = true;
     audio.pause();
     widget.classList.add('hidden');
     showEnableBtn();
     localStorage.setItem('musicDisabled', 'true');
-    removeListeners();
   });
 
   if (enableBtn) {
@@ -415,7 +469,6 @@ window.addEventListener('load', () => {
       localStorage.removeItem('musicDisabled');
       hideEnableBtn();
       widget.classList.remove('hidden');
-      started = true;
       audio.play().then(setPlaying).catch(function() { setPaused(); });
     });
   }
