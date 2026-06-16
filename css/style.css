@@ -46,6 +46,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -1614,6 +1615,17 @@ body {
 .footer__social svg {
   width: 22px;
   height: 22px;
+}
+
+/* Responsive — Tablet (compact nav) */
+@media (max-width: 1024px) and (min-width: 901px) {
+  .header__nav {
+    gap: 12px;
+  }
+
+  .header__nav a {
+    font-size: 0.78rem;
+  }
 }
 
 /* Responsive */
