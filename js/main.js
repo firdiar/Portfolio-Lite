@@ -300,6 +300,45 @@ window.addEventListener('load', () => {
   updateActiveNav();
 });
 
+// Timeline Pagination
+(function() {
+  var timeline = document.getElementById('experienceTimeline');
+  var prevBtn = document.getElementById('timelinePrev');
+  var nextBtn = document.getElementById('timelineNext');
+  var info = document.getElementById('timelineInfo');
+
+  if (!timeline || !prevBtn || !nextBtn) return;
+
+  var items = timeline.querySelectorAll('.timeline__item[data-page]');
+  var totalPages = 3;
+  var currentPage = 1;
+
+  function updatePage() {
+    items.forEach(function(item) {
+      if (parseInt(item.dataset.page) === currentPage) {
+        item.classList.remove('page-hidden');
+        item.classList.remove('visible');
+        setTimeout(function() { item.classList.add('visible'); }, 50);
+      } else {
+        item.classList.add('page-hidden');
+      }
+    });
+    prevBtn.disabled = currentPage <= 1;
+    nextBtn.disabled = currentPage >= totalPages;
+    if (info) info.textContent = currentPage + ' / ' + totalPages;
+  }
+
+  updatePage();
+
+  prevBtn.addEventListener('click', function() {
+    if (currentPage > 1) { currentPage--; updatePage(); }
+  });
+
+  nextBtn.addEventListener('click', function() {
+    if (currentPage < totalPages) { currentPage++; updatePage(); }
+  });
+})();
+
 // Swiper projects carousel
 (function() {
   const swiperEl = document.getElementById('projectsSwiper');
