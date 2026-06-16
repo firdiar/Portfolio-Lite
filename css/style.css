@@ -40,6 +40,25 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) rgba(76, 143, 236, 0.08);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(76, 143, 236, 0.08);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
 }
 
 body {
