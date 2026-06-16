@@ -1613,6 +1613,9 @@ body {
 /* Intro / Loading Screen */
 body.intro-active {
   overflow: hidden;
+  position: fixed;
+  inset: 0;
+  width: 100%;
 }
 
 .intro {
