@@ -312,7 +312,11 @@ window.addEventListener('load', () => {
   if (!timeline || !prevBtn || !nextBtn) return;
 
   var items = timeline.querySelectorAll('.timeline__item[data-page]');
-  var totalPages = 3;
+  var totalPages = 1;
+  items.forEach(function(item) {
+    var page = parseInt(item.dataset.page, 10);
+    if (!isNaN(page) && page > totalPages) totalPages = page;
+  });
   var currentPage = 1;
 
   function updatePage() {
